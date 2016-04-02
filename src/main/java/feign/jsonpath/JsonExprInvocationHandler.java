@@ -10,6 +10,7 @@ import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
 
 import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.InvalidJsonException;
 
 public class JsonExprInvocationHandler implements InvocationHandler {
 
@@ -28,8 +29,11 @@ public class JsonExprInvocationHandler implements InvocationHandler {
     } else if ("hashCode".equals(method.getName())) {
       return document.hashCode() + type.hashCode();
     } else if ("toString".equals(method.getName())) {
-      return type + ": " + document.toString();
+      return toString();
     }
+
+    if ("context".equals(method.getName()) && method.getReturnType().equals(DocumentContext.class))
+      return document;
 
     method.setAccessible(true);
     if (isDefaultMethod(method)) {
@@ -41,6 +45,14 @@ public class JsonExprInvocationHandler implements InvocationHandler {
       throw new IllegalStateException("Method not annotated with @JsonExpr " + method);
 
     return document.read(path.value());
+  }
+
+  public String toString() {
+    try {
+      return type + ": " + document.jsonString();
+    } catch (InvalidJsonException e) {
+      return type + ": " + document.toString() + " " + e;
+    }
   }
 
   public Object invokeJava8DefaultMethod(Object proxy, Method method, Object[] args) throws NoSuchMethodException,

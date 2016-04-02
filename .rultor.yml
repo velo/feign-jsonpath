@@ -2,9 +2,9 @@ architect:
 - velo
 
 assets:
-  secring.gpg: velo/maven-formatter-plugin#.rultor/secring.gpg.asc
-  settings.xml: velo/maven-formatter-plugin#.rultor/settings.xml.asc
-  pubring.gpg: velo/maven-formatter-plugin#.rultor/pubring.gpg.asc
+  secring.gpg: velo/.assets#maven/secring.gpg.asc
+  settings.xml: velo/.assets#maven/settings.xml.asc
+  pubring.gpg: velo/.assets#maven/pubring.gpg.asc
 
 merge:
   commanders:

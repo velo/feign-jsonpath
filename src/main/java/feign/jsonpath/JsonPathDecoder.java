@@ -43,57 +43,52 @@ public class JsonPathDecoder implements Decoder {
     if (response.body() == null)
       return null;
 
-	final DocumentContext document = JsonPath.parse(response.body().asInputStream(), configuration);
-	if(document.read("$.length()") == null)
-		return null;
-	if(type instanceof ParameterizedType) {
-	  Class<?> rawType = (Class<?>) ((ParameterizedType) type).getRawType();
+    final DocumentContext document = JsonPath.parse(response.body().asInputStream(), configuration);
+    if (document.read("$.length()") == null)
+      return null;
+    if (type instanceof ParameterizedType) {
+      Class<?> rawType = (Class<?>) ((ParameterizedType) type).getRawType();
 
-	  Class<?> destinationClass;
-      if(Collection.class.isAssignableFrom(rawType))
-	    destinationClass = (Class<?>) ((ParameterizedType) type).getActualTypeArguments()[0];
-	  else
-	    throw new IllegalStateException("Unable to decode " + type);
-      
+      Class<?> destinationClass;
+      if (Collection.class.isAssignableFrom(rawType))
+        destinationClass = (Class<?>) ((ParameterizedType) type).getActualTypeArguments()[0];
+      else
+        throw new IllegalStateException("Unable to decode " + type);
+
       JsonSplit jsonSplit = destinationClass.getAnnotation(JsonSplit.class);
-      if(jsonSplit == null)
+      if (jsonSplit == null)
         throw new IllegalStateException("Missing @JsonSplit at " + destinationClass);
-      
+
       JSONArray array = document.read(jsonSplit.value());
       Collection<Object> destination = createInstanceOf(rawType);
       for (Object jsonElement : array)
         destination.add(newJsonPathProxy(destinationClass, JsonPath.parse(jsonElement)));
 
       return destination;
-	}
+    }
     return newJsonPathProxy(type, document);
   }
 
-  private Object newJsonPathProxy(final Type type, final DocumentContext document)
-  {
+  private Object newJsonPathProxy(final Type type, final DocumentContext document) {
     return Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[] { (Class<?>) type },
         new JsonExprInvocationHandler(type, document));
   }
 
   @SuppressWarnings("unchecked")
-  private Collection<Object> createInstanceOf(Class<?> rawType)
-  {
-    if(!rawType.isInterface() && !Modifier.isAbstract(rawType.getModifiers()))
-      try
-      {
-        return (Collection<Object>) rawType.newInstance();
-      }
-      catch (InstantiationException | IllegalAccessException e)
-      {
-        throw new IllegalStateException("Unable to create an instance of " + rawType);
-      }
-      
-    if(Set.class.isAssignableFrom(rawType))
+  private Collection<Object> createInstanceOf(Class<?> rawType) {
+    if (!rawType.isInterface() && !Modifier.isAbstract(rawType.getModifiers()))
+      try {
+      return (Collection<Object>) rawType.newInstance();
+    } catch (InstantiationException | IllegalAccessException e) {
+      throw new IllegalStateException("Unable to create an instance of " + rawType);
+    }
+
+    if (Set.class.isAssignableFrom(rawType))
       return new HashSet<Object>();
 
-    if(Queue.class.isAssignableFrom(rawType))
+    if (Queue.class.isAssignableFrom(rawType))
       return new LinkedList<Object>();
-    
+
     return new ArrayList<Object>();
   }
 

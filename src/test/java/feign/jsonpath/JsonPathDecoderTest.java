@@ -39,13 +39,10 @@ public class JsonPathDecoderTest {
     assertNotNull(zones);
     assertEquals(2, zones.size());
     Zone zone1 = zones.get(0);
-    try
-    {
+    try {
       assertNull(zone1.id());
       fail();
-    }
-    catch (PathNotFoundException e)
-    {
+    } catch (PathNotFoundException e) {
       assertEquals("No results for path: $['id']", e.getMessage());
     }
     assertEquals("denominator.io.1", zone1.names());

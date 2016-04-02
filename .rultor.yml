@@ -1,0 +1,24 @@
+architect:
+- velo
+
+assets:
+  secring.gpg: velo/maven-formatter-plugin#.rultor/secring.gpg.asc
+  settings.xml: velo/maven-formatter-plugin#.rultor/settings.xml.asc
+  pubring.gpg: velo/maven-formatter-plugin#.rultor/pubring.gpg.asc
+
+merge:
+  commanders:
+  - velo
+  script: |-
+    mvn clean install -Pci --errors --settings ../settings.xml
+
+env:
+  MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
+
+release:
+  script: |-
+    mvn versions:set "-DnewVersion=${tag}"
+    git commit -am "${tag}"
+    mvn clean deploy -Prelease --errors --settings ../settings.xml -Dgpg.homedir=..
+  commanders:
+  - velo

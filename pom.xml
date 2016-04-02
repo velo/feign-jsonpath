@@ -6,7 +6,6 @@
   <artifactId>feign-jsonpath</artifactId>
   <version>0.2-SNAPSHOT</version>
   <name>feign-jsonpath</name>
-  <description>Contract for Netflix/feign using jayway/JsonPath</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,6 +13,8 @@
     <coveralls.token>0eSzFqpkn4JjLbnHOIWw0rSFcGZj4yKxv</coveralls.token>
     <java.version>1.7</java.version>
   </properties>
+
+  <description>Contract for Netflix/feign using jayway/JsonPath</description>
 
   <dependencies>
     <dependency>
@@ -163,7 +164,7 @@
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
         <artifactId>sortpom-maven-plugin</artifactId>
-        <version>2.5.0</version>
+        <version>2.4.0</version>
         <configuration>
           <keepBlankLines>true</keepBlankLines>
           <lineSeparator>\n</lineSeparator>

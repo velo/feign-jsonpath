@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.marvinformatics.feign</groupId>
   <artifactId>feign-jsonpath</artifactId>
   <version>0.2-SNAPSHOT</version>
-
   <name>feign-jsonpath</name>
   <description>Contract for Netflix/feign using jayway/JsonPath</description>
-
   <dependencies>
     <dependency>
       <groupId>com.netflix.feign</groupId>
@@ -28,41 +24,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <developers>
-    <developer>
-      <id>velo</id>
-      <name>Marvin Herman Froeder</name>
-      <email>velo br at gmail dot com</email>
-    </developer>
-  </developers>
-
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <scm>
-    <url>scm:https://github.com/velo/feign-jsonpath.git</url>
-    <connection>scm:https://github.com/velo/feign-jsonpath.git</connection>
-  </scm>
-
-  <url>https://github.com/velo/feign-jsonpath</url>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
-
   <build>
     <plugins>
       <plugin>
@@ -107,7 +68,35 @@
       </plugin>
     </plugins>
   </build>
-
+  <url>https://github.com/velo/feign-jsonpath</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>velo</id>
+      <name>Marvin Herman Froeder</name>
+      <email>velo br at gmail dot com</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:https://github.com/velo/feign-jsonpath.git</connection>
+    <url>scm:https://github.com/velo/feign-jsonpath.git</url>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
   <profiles>
     <profile>
       <id>release</id>
@@ -119,10 +108,10 @@
             <version>1.5</version>
             <executions>
               <execution>
-                <phase>verify</phase>
                 <goals>
                   <goal>sign</goal>
                 </goals>
+                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
@@ -142,5 +131,4 @@
       </build>
     </profile>
   </profiles>
-
 </project>

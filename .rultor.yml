@@ -10,15 +10,17 @@ merge:
   commanders:
   - velo
   script: |-
-    mvn clean install -Pci --errors --settings ../settings.xml
+    mvn install dependency:go-offline -Pskip-formatter -DskipTests=true -q
+    mvn install -Pci -B --settings ../settings.xml
 
 env:
   MAVEN_OPTS: -XX:MaxPermSize=256m -Xmx1g
 
 release:
   script: |-
+    mvn install dependency:go-offline -Pskip-formatter -DskipTests=true -q
     mvn versions:set "-DnewVersion=${tag}"
     git commit -am "${tag}"
-    mvn clean deploy -Prelease --errors --settings ../settings.xml -Dgpg.homedir=..
+    mvn deploy -Pci -B -Prelease --settings ../settings.xml -Dgpg.homedir=..
   commanders:
   - velo

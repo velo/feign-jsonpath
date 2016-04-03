@@ -247,7 +247,7 @@
 
   <url>https://github.com/velo/feign-jsonpath</url>
 
-  <inceptionYear>${year}</inceptionYear>
+  <inceptionYear>2016</inceptionYear>
 
   <licenses>
     <license>

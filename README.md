@@ -8,3 +8,4 @@
 [![Stars](https://img.shields.io/github/stars/velo/feign-jsonpath.svg)](https://github.com/velo/feign-jsonpath/stargazers)
 
 A contract for Netflix/feign using jayway/JsonPath
+

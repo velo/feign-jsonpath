@@ -21,7 +21,7 @@
 
   <groupId>com.marvinformatics.feign</groupId>
   <artifactId>feign-jsonpath</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.4</version>
   <name>feign-jsonpath</name>
   <description>Contract for Netflix/feign using jayway/JsonPath</description>
 

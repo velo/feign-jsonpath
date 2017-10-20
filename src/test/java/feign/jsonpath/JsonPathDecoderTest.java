@@ -21,15 +21,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import com.jayway.jsonpath.*;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
-
-import com.jayway.jsonpath.PathNotFoundException;
-import com.jayway.jsonpath.TypeRef;
 
 import feign.Response;
 
@@ -60,6 +59,24 @@ public class JsonPathDecoderTest {
     } catch (PathNotFoundException e) {
       assertEquals("No results for path: $['id']", e.getMessage());
     }
+    assertEquals("denominator.io.1", zone1.names());
+    Zone zone2 = zones.get(1);
+    assertEquals("ABCD", zone2.id());
+    assertEquals("denominator.io.2", zone2.names());
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  public void withMissingField() throws Exception {
+    Configuration config = Configuration.defaultConfiguration().addOptions(Option.SUPPRESS_EXCEPTIONS);
+
+    Response response = Response.create(200, "OK", Collections.<String, Collection<String>> emptyMap(), zonesJson, UTF_8);
+    List<Zone> zones = (List<Zone>) new JsonPathDecoder(config).decode(response, new TypeRef<List<Zone>>() {
+    }.getType());
+    assertNotNull(zones);
+    assertEquals(2, zones.size());
+    Zone zone1 = zones.get(0);
+    assertNull("Path $['id'] is expected to be null", zone1.id());
     assertEquals("denominator.io.1", zone1.names());
     Zone zone2 = zones.get(1);
     assertEquals("ABCD", zone2.id());

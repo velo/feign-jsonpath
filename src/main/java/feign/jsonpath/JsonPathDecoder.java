@@ -62,7 +62,7 @@ public class JsonPathDecoder implements Decoder {
     if (document.read("$.length()") == null)
       return null;
     if (type instanceof ParameterizedType) {
-      Class<?> rawType = (Class<?>) ((ParameterizedType) type).getRawType();
+      final Class<?> rawType = (Class<?>) ((ParameterizedType) type).getRawType();
 
       Class<?> destinationClass;
       if (Collection.class.isAssignableFrom(rawType))
@@ -70,14 +70,14 @@ public class JsonPathDecoder implements Decoder {
       else
         throw new IllegalStateException("Unable to decode " + type);
 
-      JsonSplit jsonSplit = destinationClass.getAnnotation(JsonSplit.class);
+      final JsonSplit jsonSplit = destinationClass.getAnnotation(JsonSplit.class);
       if (jsonSplit == null)
         throw new IllegalStateException("Missing @JsonSplit at " + destinationClass);
 
-      JSONArray array = document.read(jsonSplit.value());
-      Collection<Object> destination = createInstanceOf(rawType);
-      for (Object jsonElement : array)
-        destination.add(newJsonPathProxy(destinationClass, JsonPath.parse(jsonElement)));
+      final JSONArray array = document.read(jsonSplit.value());
+      final Collection<Object> destination = createInstanceOf(rawType);
+      for (final Object jsonElement : array)
+        destination.add(newJsonPathProxy(destinationClass, JsonPath.parse(jsonElement, this.configuration)));
 
       return destination;
     }
